@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Almoxarifado - Tiro de Guerra</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: #fff;
+    }
+
+    header {
+      background: #2c3e50;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #34495e;
+      height: 100vh;
+      padding-top: 10px;
+    }
+
+    .sidebar button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: none;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .sidebar button:hover {
+      background: #2c3e50;
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .card {
+      background: #2c3e50;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+    }
+
+    input, select {
+      padding: 8px;
+      margin: 5px 0;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button.action {
+      background: #27ae60;
+      border: none;
+      padding: 10px;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #555;
+      padding: 8px;
+      text-align: left;
+    }
+
+  </style>
+</head>
+<body>
+
+<header>Sistema de Almoxarifado - Tiro de Guerra</header>
+
+<div class="container">
+  <div class="sidebar">
+    <button onclick="showModule('dashboard')">Dashboard</button>
+    <button onclick="showModule('cadastro')">Cadastro</button>
+    <button onclick="showModule('estoque')">Estoque</button>
+    <button onclick="showModule('armamento')">Armamento</button>
+    <button onclick="showModule('emprestimos')">Empréstimos</button>
+    <button onclick="showModule('relatorios')">Relatórios</button>
+  </div>
+
+  <div class="content">
+
+    <div id="dashboard" class="module">
+      <div class="card">
+        <h2>Dashboard</h2>
+        <p>Bem-vindo ao sistema.</p>
+      </div>
+    </div>
+
+    <div id="cadastro" class="module" style="display:none">
+      <div class="card">
+        <h2>Cadastro de Item</h2>
+        <input type="text" id="itemNome" placeholder="Nome do item">
+        <select id="itemCategoria">
+          <option>Armamento</option>
+          <option>Fardamento</option>
+          <option>Equipamento</option>
+        </select>
+        <button class="action" onclick="addItem()">Cadastrar</button>
+      </div>
+    </div>
+
+    <div id="estoque" class="module" style="display:none">
+      <div class="card">
+        <h2>Controle de Estoque</h2>
+        <table>
+          <thead>
+            <tr><th>Item</th><th>Categoria</th></tr>
+          </thead>
+          <tbody id="tabelaEstoque"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="armamento" class="module" style="display:none">
+      <div class="card">
+        <h2>Controle de Armamento</h2>
+        <p>Registro de armas e controle de cautela.</p>
+      </div>
+    </div>
+
+    <div id="emprestimos" class="module" style="display:none">
+      <div class="card">
+        <h2>Empréstimos</h2>
+        <p>Gerenciar empréstimos e devoluções.</p>
+      </div>
+    </div>
+
+    <div id="relatorios" class="module" style="display:none">
+      <div class="card">
+        <h2>Relatórios</h2>
+        <p>Visualizar dados do sistema.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let estoque = [];
+
+  function showModule(id) {
+    document.querySelectorAll('.module').forEach(m => m.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+  }
+
+  function addItem() {
+    const nome = document.getElementById('itemNome').value;
+    const categoria = document.getElementById('itemCategoria').value;
+
+    if (!nome) return alert('Digite um nome');
+
+    estoque.push({ nome, categoria });
+    renderTabela();
+    alert('Item cadastrado!');
+  }
+
+  function renderTabela() {
+    const tabela = document.getElementById('tabelaEstoque');
+    tabela.innerHTML = '';
+
+    estoque.forEach(item => {
+      const row = `<tr><td>${item.nome}</td><td>${item.categoria}</td></tr>`;
+      tabela.innerHTML += row;
+    });
+  }
+</script>
+
+</body>
+</html>
